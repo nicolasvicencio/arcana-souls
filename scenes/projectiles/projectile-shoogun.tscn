@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyfgok5wgjtjs"]
+
+[ext_resource type="Script" path="res://scripts/weapons/projectile.gd" id="1_xnlpv"]
+[ext_resource type="Texture2D" uid="uid://cl08w2nro4noe" path="res://assets/weapons/All_Fire_Bullet_Pixel_16x16_04.png" id="2_2s168"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rbeo"]
+atlas = ExtResource("2_2s168")
+region = Rect2(96, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mnxx"]
+atlas = ExtResource("2_2s168")
+region = Rect2(112, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqqfd"]
+atlas = ExtResource("2_2s168")
+region = Rect2(128, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvpca"]
+atlas = ExtResource("2_2s168")
+region = Rect2(144, 256, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_52ig5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rbeo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mnxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqqfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvpca")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0n671"]
+radius = 5.0
+
+[sub_resource type="Curve" id="Curve_nckgp"]
+_data = [Vector2(0.0267176, 1), 0.0, 0.0, 0, 0, Vector2(0.950382, 0.0188679), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ProjectileShootgun" type="Area2D" groups=["attack"]]
+rotation = 1.5708
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_xnlpv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_52ig5")
+frame_progress = 0.674489
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.37114e-08, 1)
+shape = SubResource("CircleShape2D_0n671")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(-1, 0)
+spread = 80.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.54
+initial_velocity_max = 94.59
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_nckgp")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

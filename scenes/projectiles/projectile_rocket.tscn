@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://diid5q7nwmmfv"]
+
+[ext_resource type="Script" path="res://scripts/projectiles/projectile_rocket.gd" id="1_1arkj"]
+[ext_resource type="Texture2D" uid="uid://v1r1rxo3xm35" path="res://assets/weapons/bazooka-rocket.png" id="2_3k688"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2jsrw"]
+size = Vector2(21.25, 8.75)
+
+[node name="ProjectileRocket" type="Area2D" groups=["attack"]]
+scale = Vector2(0.8, 0.8)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_1arkj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3k688")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.624999, -0.625)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_2jsrw")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://chrodjoq6vkbo"]
+
+[ext_resource type="Texture2D" uid="uid://dgbu0mtapbam3" path="res://assets/enemies/32x32-bat-sprite.png" id="1_rwl6m"]
+[ext_resource type="Script" path="res://scripts/enemy/bat_enemy.gd" id="1_vgp2l"]
+[ext_resource type="Shader" path="res://shader/blink.gdshader" id="2_v1ylw"]
+[ext_resource type="PackedScene" uid="uid://b7u30qfh67h" path="res://scenes/util/hitbox.tscn" id="3_it53o"]
+[ext_resource type="PackedScene" uid="uid://dirfmucd1cecd" path="res://scenes/util/hurtbox.tscn" id="4_dcnrt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6iqmu"]
+shader = ExtResource("2_v1ylw")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lj7m"]
+atlas = ExtResource("1_rwl6m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ws0qg"]
+atlas = ExtResource("1_rwl6m")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg7ps"]
+atlas = ExtResource("1_rwl6m")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u6jmh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lj7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ws0qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg7ps")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hqjeq"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jkxft"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ticxr"]
+radius = 22.0907
+
+[sub_resource type="Curve" id="Curve_4qqbk"]
+_data = [Vector2(0.0267176, 1), 0.0, 0.0, 0, 0, Vector2(0.950382, 0.0188679), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="BatEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_vgp2l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_6iqmu")
+sprite_frames = SubResource("SpriteFrames_u6jmh")
+frame_progress = 0.0548616
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_hqjeq")
+
+[node name="Hitbox" parent="." instance=ExtResource("3_it53o")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("CircleShape2D_jkxft")
+debug_color = Color(0.738215, 0.371324, 0.733525, 0.42)
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_dcnrt")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_ticxr")
+debug_color = Color(9.14484e-07, 0.632236, 0.453672, 0.42)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(-1, 0)
+spread = 80.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.54
+initial_velocity_max = 94.59
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_4qqbk")
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]

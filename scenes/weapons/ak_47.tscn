@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://xta3heruyvph"]
+
+[ext_resource type="Script" path="res://scripts/weapons/ak_47.gd" id="1_fetll"]
+[ext_resource type="PackedScene" uid="uid://puxaaf8j1ub2" path="res://scenes/projectiles/projectile_ak.tscn" id="2_0m26k"]
+[ext_resource type="Texture2D" uid="uid://bxmw4kxwd03c5" path="res://assets/weapons/ak-47.png" id="3_sgrhc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upkv4"]
+size = Vector2(30, 10)
+
+[node name="Ak-47" type="Area2D"]
+scale = Vector2(0.8, 0.8)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_fetll")
+bullet = ExtResource("2_0m26k")
+angle_variation = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_upkv4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_sgrhc")

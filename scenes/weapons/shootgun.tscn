@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpfwdxswollus"]
+
+[ext_resource type="Texture2D" uid="uid://c4ipev5rkg272" path="res://assets/weapons/shootgun.png" id="1_cvnmj"]
+[ext_resource type="Script" path="res://scripts/weapons/shootgun.gd" id="1_e3ple"]
+[ext_resource type="PackedScene" uid="uid://dyfgok5wgjtjs" path="res://scenes/projectiles/projectile-shoogun.tscn" id="2_65eoa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dby4"]
+size = Vector2(32, 11)
+
+[node name="Shootgun" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_e3ple")
+bullet = ExtResource("2_65eoa")
+number_bullets = 5
+cooldown = 0.5
+shoot_arc = 45
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cvnmj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_3dby4")

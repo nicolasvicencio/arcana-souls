@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://puxaaf8j1ub2"]
+
+[ext_resource type="Script" path="res://scripts/projectiles/projectile_ak.gd" id="1_urwc6"]
+[ext_resource type="Texture2D" uid="uid://b1yy1wov5td7g" path="res://assets/weapons/ak-projectile.png" id="2_010hc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbjrb"]
+radius = 4.0
+height = 18.0
+
+[sub_resource type="Animation" id="Animation_djn12"]
+resource_name = "shoot"
+length = 0.12
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_010hc")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_ef50w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u4hm8"]
+_data = {
+"RESET": SubResource("Animation_ef50w"),
+"shoot": SubResource("Animation_djn12")
+}
+
+[node name="ProjectileAK" type="Area2D" groups=["attack"]]
+script = ExtResource("1_urwc6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wbjrb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_010hc")
+hframes = 4
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u4hm8")
+}
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

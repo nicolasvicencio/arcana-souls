@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2bs17j3kcy6b"]
+
+[ext_resource type="Texture2D" uid="uid://y57nuosb0i5d" path="res://assets/weapons/bazooka.png" id="1_8hw5s"]
+[ext_resource type="Script" path="res://scripts/weapons/bazooka.gd" id="1_reba6"]
+[ext_resource type="PackedScene" uid="uid://diid5q7nwmmfv" path="res://scenes/projectiles/projectile_rocket.tscn" id="2_awumv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gheu5"]
+size = Vector2(34, 15)
+
+[node name="Bazooka" type="Area2D"]
+script = ExtResource("1_reba6")
+bullet = ExtResource("2_awumv")
+cooldown = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_gheu5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8hw5s")
