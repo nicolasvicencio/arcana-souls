@@ -3034,6 +3034,7 @@ position = Vector2(366, 153)
 position = Vector2(65, 93)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="HealthBar" parent="CanvasLayer" instance=ExtResource("12_2uep1")]
 offset_left = 0.0

@@ -3,6 +3,9 @@ extends CharacterBody2D
 const SPEED = 200
 var max_health = 10
 var current_health = max_health
+var weapons_collection: Array[PackedScene]
+var dir : DirAccess
+
 @onready var player_animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var gun: Area2D = $Gun
 @onready var shootgun: Area2D = $Shootgun
@@ -13,7 +16,7 @@ signal healthChanged
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	get_weapons()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -45,6 +48,16 @@ func shoot():
 
 func _on_hurtbox_hurt(damage: Variant) -> void:
 	current_health = current_health - damage
-	print("hi")
 	healthChanged.emit()
+
+func get_weapons():
+	dir = DirAccess.open("res://scenes/weapons")
+	if !dir: print("An error has ocurred with the weapons scenes path")
 	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		print("file found: " + file_name)
+		
+		file_name = dir.get_next()
+		

@@ -26,7 +26,7 @@ mouse_cursor/custom_image_hotspot=Vector2(36, 36)
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/godot-vim/plugin.cfg")
 
 [global_group]
 
